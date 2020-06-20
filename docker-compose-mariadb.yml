@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+    mariadb-nextcloud:
+        container_name: ${DB_CONTAINER_NAME}
+        build: 
+            context: .
+            dockerfile: Dockerfile-mariadb
+            args:
+                IDGP: ${GPID}
+                IDPW: ${PWID}
+        image: mariadb-image:nextcloud
+        labels:
+            - "com.mariadb"
+        restart: unless-stopped
+        volumes:
+            - ${LOCAL_DB_DIR}:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}    
+
